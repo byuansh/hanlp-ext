@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        versionElasticsearch = "5.4.3"
+        versionElasticsearch = "5.6.3"
     }
     repositories {
         maven { url 'http://repox.gtan.com:8078' }
@@ -94,6 +94,7 @@ project(':es-plugin') {
                             || path.contains("org.yaml")
                             || path.contains("com.tdunning")
                             || path.contains("org.hdrhistogram")
+                            || path.contains("log4j")
                     )
                 }
                 .collect { it }
