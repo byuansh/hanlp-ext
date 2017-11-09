@@ -20,7 +20,6 @@ allprojects {
 }
 
 def ccCommonBuildScript = file("$rootDir/gradle/common.gradle")
-def ccLibs = fileTree(dir: "$rootDir/lib", include: '*.jar', excludes: ["*-sources.jar", "*-src.jar"])
 
 project(':common') {
     apply from: ccCommonBuildScript
@@ -28,8 +27,8 @@ project(':common') {
     description = 'common'
 
     dependencies {
-        compile ccLibs
         compile("org.elasticsearch:elasticsearch:$versionElasticsearch")
+        compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.5.0'
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
     }
 }
@@ -55,24 +54,12 @@ project(':es-plugin') {
 
     configurations {
         includeJars
-//        compile.exclude group: 'org.elasticsearch', module: 'elasticsearch'
-//        compile.exclude group: 'org.apache.lucene'
     }
 
     dependencies {
         compile project(':common')
-
-//        compile("com.hankcs.nlp:hanlp-lucene-plugin:1.1.2") {
-//            exclude group: "com.hankcs", module: "hanlp"
-//            exclude group: "org.apache.lucene"
-//        }
         testCompile("org.elasticsearch.test:framework:$versionElasticsearch")
-
-        includeJars(ccLibs)
-//        includeJars("com.hankcs.nlp:hanlp-lucene-plugin:1.1.2") {
-//            exclude group: "com.hankcs", module: "hanlp"
-//            exclude group: "org.apache.lucene"
-//        }
+        testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.12'
         includeJars(project(':common'))
     }
 

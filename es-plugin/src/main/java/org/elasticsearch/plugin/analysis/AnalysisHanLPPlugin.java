@@ -1,5 +1,7 @@
 package org.elasticsearch.plugin.analysis;
 
+import com.hankcs.hanlp.utility.Predefine;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.elasticsearch.index.analysis.*;
 import org.elasticsearch.indices.analysis.AnalysisModule;
@@ -11,8 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnalysisHanLPPlugin extends Plugin implements AnalysisPlugin {
+
     @Override
     public Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> getTokenizers() {
+        String propPath = System.getenv("HANLP_PROPERTIES_PATH");
+        if (StringUtils.isNotEmpty(propPath)) {
+            Predefine.HANLP_PROPERTIES_PATH = propPath;
+        }
+
         HashMap<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> tokenizers = new HashMap<>();
         tokenizers.put("hanlp", HanLPTokenizerFactory::createStandard);
         tokenizers.put("hanlp-standard", HanLPTokenizerFactory::createStandard);
