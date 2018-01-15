@@ -1,8 +1,10 @@
 buildscript {
     ext {
-        versionElasticsearch = "5.6.3"
+        versionElasticsearch = "5.6.5"
     }
     repositories {
+		maven { url 'file:///e:/apache-maven-3.3.9/repository/'} //使用file协议，本地仓库
+		mavenLocal()
         maven { url 'http://repox.gtan.com:8078' }
         mavenCentral()
         jcenter()
@@ -11,6 +13,8 @@ buildscript {
 
 allprojects {
     repositories {
+		maven { url 'file:///e:/apache-maven-3.3.9/repository/'} //使用file协议，本地仓库
+		mavenLocal()
         maven { url 'http://repox.gtan.com:8078' }
         mavenCentral()
         jcenter()
@@ -28,22 +32,22 @@ project(':common') {
 
     dependencies {
         compile("org.elasticsearch:elasticsearch:$versionElasticsearch")
-        compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.5.0'
-        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+        compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.5.3'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
     }
 }
 
-project(':hanlp-io') {
-    apply from: ccCommonBuildScript
-
-    description = 'hanlp-io'
-
-    dependencies {
-        compile project(':common')
-
-        compile("org.apache.hadoop:hadoop-client:2.7.3")
-    }
-}
+// project(':hanlp-io') {
+//     apply from: ccCommonBuildScript
+// 
+//     description = 'hanlp-io'
+// 
+//     dependencies {
+//         compile project(':common')
+// 
+//         compile("org.apache.hadoop:hadoop-client:2.8.3")
+//     }
+// }
 
 project(':es-plugin') {
     apply from: ccCommonBuildScript
